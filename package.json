@@ -1,6 +1,6 @@
 {
   "name": "aws-step-functions-s3-payload",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Utility class to read and write payloads in AWS Step Functions",
   "main": "index.js",
   "scripts": {
@@ -15,10 +15,13 @@
     "aws step functions",
     "s3"
   ],
-  "author": "Silas Knobel",
+  "author": "katunch",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/katunch/aws-step-functions-s3-payload/issues"
   },
-  "homepage": "https://github.com/katunch/aws-step-functions-s3-payload#readme"
+  "homepage": "https://github.com/katunch/aws-step-functions-s3-payload#readme",
+  "dependencies": {
+    "aws-sdk": "^2.1208.0"
+  }
 }
