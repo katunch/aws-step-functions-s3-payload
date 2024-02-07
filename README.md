@@ -52,8 +52,8 @@ module.exports.handler = async (event, context) => {
 ## Invocation
 ```javascript
 const { DateTime } = require('luxon');
-const AWS = require('aws-sdk');
-const stepFunctions = new AWS.StepFunctions();
+const {SFNClient, InvokeStateMachineCommand} = require('@aws-sdk/client-sfn');
+const stepFunctions = new SFNClient();
 const STATEMACHINE_ARN='[YOUR STATE MACHINE ARN]';
 
 const invokeStateMachine = async () => {
@@ -66,7 +66,8 @@ const invokeStateMachine = async () => {
         name: `${startTime.toFormat('yyyyMMdd-HHmmss')}-${startTime.toMillis()}-${invoiceIds.length}`
     };
     console.log(`Starting State Machine Execution: ${executionParams.name}`);
-    const sfResult = await stepFunctions.startExecution(executionParams).promise();
+    const invokeCommand = new InvokeStateMachineCommand(executionParams);
+    const sfResult = await stepFunctions.send(invokeCommand);
     return sfResult;
 }
 ```

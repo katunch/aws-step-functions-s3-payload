@@ -1,5 +1,5 @@
-const AWS = require('aws-sdk');
-const s3 = new AWS.S3();
+const {S3Client, GetObjectCommand, PutObjectCommand} = require('@aws-sdk/client-s3');
+const s3 = new S3Client();
 
 class S3PayloadUtils {
     static toCamelCase(input) {
@@ -34,7 +34,8 @@ class S3PayloadUtils {
     static async getPayloadFromS3(event) {
         if (event.input.payloadUrl && event.input.payloadUrl.startsWith('s3://')) {
             const params = S3PayloadUtils.urlToS3Params(event.input.payloadUrl);
-            const object = await s3.getObject(params).promise();
+            const getObjectCommand = new GetObjectCommand(params);
+            const object = await s3.send(getObjectCommand);
             return JSON.parse(object.Body.toString())
         }
         return event.input;
@@ -43,7 +44,8 @@ class S3PayloadUtils {
     static async savePayloadToS3(context, payload) {
         const params = S3PayloadUtils.contextToS3Params(context);
         params.Body = JSON.stringify(payload);
-        await s3.putObject(params).promise();
+        const putObjectCommand = new PutObjectCommand(params);
+        await s3.send(putObjectCommand);
         return S3PayloadUtils.s3ParamsToUrl(params);
     }
 }
