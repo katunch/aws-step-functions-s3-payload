@@ -36,7 +36,7 @@ class S3PayloadUtils {
             const params = S3PayloadUtils.urlToS3Params(event.input.payloadUrl);
             const getObjectCommand = new GetObjectCommand(params);
             const object = await s3.send(getObjectCommand);
-            return JSON.parse(object.Body.toString())
+            return JSON.parse(object.Body.transformToString());
         }
         return event.input;
     }
