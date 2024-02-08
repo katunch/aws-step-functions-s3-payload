@@ -1,6 +1,6 @@
 {
   "name": "aws-step-functions-s3-payload",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Utility class to read and write payloads in AWS Step Functions",
   "main": "index.js",
   "scripts": {
